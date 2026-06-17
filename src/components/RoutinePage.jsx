@@ -15,7 +15,7 @@ function RoutinePage({
   const [editing, setEditing] = useState(false);
   const [newExercise, setNewExercise] = useState("");
 
-  const today = new Date().toISOString().split("T")[0];
+  const today = new Date().toLocaleDateString("en-CA");
 
   // -------------------------
   // SAVE LOG
