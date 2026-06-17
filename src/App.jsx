@@ -10,9 +10,22 @@ function App() {
   const [selectedRoutineId, setSelectedRoutineId] = useState(null);
 
   const [routines, setRoutines] = useState(() => {
-    const saved = localStorage.getItem("routines");
-    return saved ? JSON.parse(saved) : [];
-  });
+  const saved = localStorage.getItem("routines");
+
+  if (!saved) return [];
+
+  try {
+    const parsed = JSON.parse(saved);
+
+    // FIX OLD DATA STRUCTURE
+    return parsed.map((r) => ({
+      ...r,
+      exercises: r.exercises || [],
+    }));
+  } catch {
+    return [];
+  }
+});
 
   const [editing, setEditing] = useState(false);
 
@@ -29,7 +42,6 @@ function App() {
   function openRoutine(routine) {
     setSelectedRoutineId(routine.id);
     setScreen("routine");
-    setEditing(false);
   }
 
   // IMPORTANT: derive latest routine from state
@@ -38,34 +50,34 @@ function App() {
   );
 
   return (
-    <div>
-      {screen === "dashboard" && (
-        <Dashboard
-          routines={routines}
-          onAddRoutine={() => setScreen("addRoutine")}
-          onOpenRoutine={openRoutine}
-        />
-      )}
+  <div className="app-scroll">
 
-      {screen === "addRoutine" && (
-        <AddRoutine
-          onSave={addRoutine}
-          onCancel={() => setScreen("dashboard")}
-        />
-      )}
+    {screen === "dashboard" && (
+      <Dashboard
+        routines={routines}
+        onAddRoutine={() => setScreen("addRoutine")}
+        onOpenRoutine={openRoutine}
+      />
+    )}
 
-      {screen === "routine" && selectedRoutine && (
-        <RoutinePage
-          routine={selectedRoutine}
-          onBack={() => setScreen("dashboard")}
-          editing={editing}
-          setEditing={setEditing}
-          setRoutines={setRoutines}
-          routines={routines}
-        />
-      )}
-    </div>
-  );
+    {screen === "addRoutine" && (
+      <AddRoutine
+        onSave={addRoutine}
+        onCancel={() => setScreen("dashboard")}
+      />
+    )}
+
+    {screen === "routine" && selectedRoutine && (
+      <RoutinePage
+        routine={selectedRoutine}
+        onBack={() => setScreen("dashboard")}
+        routines={routines}
+        setRoutines={setRoutines}
+      />
+    )}
+
+  </div>
+);
 }
 
 export default App;

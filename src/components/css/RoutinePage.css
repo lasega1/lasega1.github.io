@@ -1,0 +1,319 @@
+/* -----------------------
+   PAGE WRAPPER
+------------------------ */
+
+.routine-page {
+  padding: 10px;
+  padding-top: 5%;
+  color: white;
+}
+
+/* -----------------------
+   HEADER
+------------------------ */
+
+.routine-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* -----------------------
+   ADD EXERCISE BAR
+------------------------ */
+
+.add-exercise {
+  display: flex;
+  gap: 8px;
+  margin: 10px 0;
+  padding-right: 10%;
+}
+
+.add-exercise input {
+  flex: 1;
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  font-size: small;
+}
+
+
+/* -----------------------
+   TABLE WRAPPER
+------------------------ */
+
+.exercise-table {
+  margin-top: 10px;
+}
+
+/* -----------------------
+   ROW (3 COLUMNS)
+------------------------ */
+
+.exercise-row {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) 1fr 1fr;
+  align-items: center;
+
+  height: 44px;              /* 🔒 locks row height */
+  overflow: hidden;
+
+  padding: 0 6px;            /* remove vertical padding */
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+/* -----------------------
+   COLUMNS
+------------------------ */
+
+.col {
+  font-size: 14px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.col.name {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  min-width: 0; /* IMPORTANT for grid stability */
+  gap: 6px;
+}
+
+.col.tobeat,
+.col.today {
+  text-align: center;
+  font-size: 13px;
+  color: #ccc;
+}
+
+/* -----------------------
+   BUTTONS
+------------------------ */
+
+.plus-btn {
+  padding: 4px 10px;
+  border-radius: 8px;
+  border: none;
+
+  background: #111;
+  color: white;
+  font-size: 14px;
+}
+
+.delete-btn {
+  background: transparent;
+  border: none;
+  color: #ff4d4d;
+  font-size: 14px;
+}
+
+.delete-btn,
+.plus-btn {
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+/* -----------------------
+   MODAL
+------------------------ */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+}
+
+.modal {
+  background: #2f2f2f;
+  width: 100%;
+  max-width: 320px;
+
+  border-radius: 12px;
+  padding: 16px;
+
+  color: white;
+}
+
+.modal input {
+  width: 100%;
+  margin-top: 10px;
+  padding: 8px;
+
+  border-radius: 8px;
+  border: none;
+}
+
+.modal button {
+  margin-top: 10px;
+  width: 100%;
+  padding: 8px;
+
+  border-radius: 8px;
+  border: none;
+  background: #111;
+  color: white;
+}
+
+.exercise-header-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+
+  padding: 8px 6px;
+  margin-top: 10px;
+
+  font-size: 12px;
+  color: #888;
+  font-weight: 600;
+
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+
+/* default: center columns 2 + 3 */
+.exercise-header-row > div {
+  text-align: center;
+}
+
+/* first column (Exercise) stays left */
+.exercise-header-row > div:first-child {
+  text-align: left;
+  padding-left: 2px;
+}
+
+/* stick add bar to bottom feel */
+.add-exercise.bottom {
+  margin-top: 20px;
+  padding-top: 10px;
+
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+/* red add button in edit mode */
+.add-red {
+  background: #61302f; /* red */
+  color: white;
+
+  border: none;
+  border-radius: 10px;
+
+  padding: 10px 12px;
+  font-size: 12px;
+}
+
+/* prevents edit mode from affecting layout spacing */
+.routine-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* keep table layout stable */
+.exercise-table {
+  display: block;
+}
+
+/* edit bar does NOT affect table spacing */
+.edit-bar {
+  position: sticky;
+  bottom: 0;
+
+  background: #1a1a1a;
+  padding: 10px;
+
+  display: flex;
+  gap: 8px;
+
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.routine-header button {
+  width: 70px;          /* fixed width prevents shifting */
+  text-align: center;
+}
+
+/* MODAL TOP BAR */
+.modal-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+  margin-bottom: 10px;
+}
+
+/* SMALL BACK BUTTON IN CORNER */
+.modal-back {
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  width: 28px;
+  height: 28px;
+
+  border-radius: 6px;
+  border: none;
+
+  background: transparent;
+  color: white;
+
+  font-size: 14px;
+  padding: 0;
+}
+
+/* TITLE CENTERED */
+.modal-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.modal-header {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-bottom: 10px;
+}
+
+.modal-close {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+
+  width: 22px;
+  height: 10px;
+
+  padding: 0 !important;
+  margin: 0 !important;
+
+  border: none !important;
+  background: transparent !important;
+
+  color: white;
+  font-size: 16px;
+  line-height: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 auto !important;
+  max-width: 22px !important;
+
+  z-index: 999;
+}
+
+.modal {
+  position: relative;
+}
+

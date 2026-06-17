@@ -1,0 +1,130 @@
+
+/* -----------------------
+   PAGE WRAPPER
+------------------------ */
+
+.add-routine {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  color: white;
+}
+
+/* -----------------------
+   ROUTINE NAME INPUT
+------------------------ */
+
+.routine-name-input {
+  width: 100%;
+  padding: 10px;
+
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.15);
+
+  background: transparent;
+  color: white;
+
+  font-size: 13px;
+  outline: none;
+}
+
+/* -----------------------
+   SECTION TITLE
+------------------------ */
+
+.exercise-title {
+  font-size: 12px;
+  color: rgba(255,255,255,0.6);
+  margin-top: 4px;
+}
+
+/* -----------------------
+   INPUT + BUTTON ROW
+------------------------ */
+
+.exercise-input-row {
+  display: flex;
+  gap: 8px;
+}
+
+.exercise-input-row input {
+  flex: 1;
+
+  padding: 10px;
+  border-radius: 10px;
+
+  border: 1px solid rgba(255,255,255,0.15);
+  background: transparent;
+  color: white;
+
+  font-size: 13px;
+  outline: none;
+}
+
+.exercise-input-row button {
+  padding: 10px 12px;
+
+  border-radius: 10px;
+  border: none;
+
+  background: #111;
+  color: white;
+
+  font-size: 12px;
+}
+
+/* -----------------------
+   EXERCISE LIST (NO BULLETS)
+------------------------ */
+
+.exercise-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.exercise-item {
+  padding: 10px;
+
+  border-radius: 10px;
+  background: rgba(255,255,255,0.05);
+
+  font-size: 13px;
+}
+
+/* -----------------------
+   OPTIONAL ACTION BUTTONS
+------------------------ */
+
+.add-routine button {
+  cursor: pointer;
+}
+
+.exercise-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 10px;
+  padding-left: 5%;
+  border-radius: 10px;
+
+  background: rgba(255,255,255,0.05);
+  font-size: 13px;
+}
+
+.delete-btn {
+  background: transparent;
+  border: none;
+
+  color: #ff4d4d;
+  font-size: 14px;
+
+  cursor: pointer;
+}

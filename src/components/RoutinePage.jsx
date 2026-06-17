@@ -1,4 +1,5 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
+import "./css/RoutinePage.css";
 
 function RoutinePage({
   routine,
@@ -11,9 +12,14 @@ function RoutinePage({
   const [weight, setWeight] = useState("");
   const [reps, setReps] = useState("");
 
+  const [editing, setEditing] = useState(false);
+  const [newExercise, setNewExercise] = useState("");
+
   const today = new Date().toISOString().split("T")[0];
 
-  // 🔥 update single exercise log
+  // -------------------------
+  // SAVE LOG
+  // -------------------------
   function saveLog() {
     const updated = routines.map((r) => {
       if (r.id !== routine.id) return r;
@@ -23,14 +29,15 @@ function RoutinePage({
         exercises: r.exercises.map((ex) => {
           if (ex.name !== activeExercise) return ex;
 
-          const alreadyToday = ex.logs.some((l) => l.date === today);
+          const logs = ex.logs || [];
+          const alreadyToday = logs.some((l) => l.date === today);
 
           return {
             ...ex,
             logs: alreadyToday
-              ? ex.logs
+              ? logs
               : [
-                  ...ex.logs,
+                  ...logs,
                   {
                     date: today,
                     weight: Number(weight),
@@ -48,133 +55,184 @@ function RoutinePage({
     setReps("");
   }
 
+  // -------------------------
+  // ADD EXERCISE
+  // -------------------------
+  function addExercise() {
+    if (!newExercise.trim()) return;
+
+    const updated = routines.map((r) => {
+      if (r.id !== routine.id) return r;
+
+      return {
+        ...r,
+        exercises: [
+          ...r.exercises,
+          { name: newExercise.trim(), logs: [] },
+        ],
+      };
+    });
+
+    setRoutines(updated);
+    setNewExercise("");
+  }
+
+  // -------------------------
+  // DELETE EXERCISE
+  // -------------------------
+  function deleteExercise(name) {
+    const updated = routines.map((r) => {
+      if (r.id !== routine.id) return r;
+
+      return {
+        ...r,
+        exercises: r.exercises.filter((ex) => ex.name !== name),
+      };
+    });
+
+    setRoutines(updated);
+  }
+
+  // -------------------------
+  // OPEN MODAL
+  // -------------------------
   function openLog(name) {
     setActiveExercise(name);
     setModalOpen(true);
   }
 
-  const viewData = useMemo(() => {
-    const toBeat = [];
-    const todayList = [];
-
-    routine.exercises.forEach((ex) => {
-      const todayLog = ex.logs.find((l) => l.date === today);
-      const lastLog = [...ex.logs]
-        .reverse()
-        .find((l) => l.date !== today);
-
-      if (todayLog) {
-        todayList.push({ ...ex, todayLog });
-      } else {
-        todayList.push({ ...ex, todayLog: null });
-      }
-
-      if (lastLog) {
-        toBeat.push({ ...ex, lastLog });
-      }
-    });
-
-    return { toBeat, todayList };
-  }, [routine, today]);
-
+  // -------------------------
+  // RENDER
+  // -------------------------
   return (
-    <div style={{ padding: "20px" }}>
-      <button onClick={onBack}>← Back</button>
+    <div className="routine-page">
 
-      <h1>{routine.name}</h1>
+      {/* HEADER */}
+      <div className="routine-header">
+        <button onClick={onBack}>←</button>
 
-      <div style={{ display: "flex", gap: "50px" }}>
-        {/* TO BEAT */}
-        <div>
-          <h2>To Beat</h2>
+        <h1>{routine.name}</h1>
 
-          {viewData.toBeat.map((ex) => (
-            <div key={ex.name} style={{ marginBottom: "10px" }}>
-              <b>{ex.name}</b>
-
-              <div>
-                {ex.lastLog.weight}kg x {ex.lastLog.reps}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* TODAY */}
-        <div>
-          <h2>Today</h2>
-
-          {viewData.todayList.map((ex) => (
-            <div key={ex.name} style={{ marginBottom: "10px" }}>
-              <b>{ex.name}</b>
-
-              {!ex.todayLog ? (
-                <button onClick={() => openLog(ex.name)}>
-                  +
-                </button>
-              ) : (
-                <div>
-                  {ex.todayLog.weight}kg x {ex.todayLog.reps}
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+        <button onClick={() => setEditing(!editing)}>
+          {editing ? "Done" : "Edit"}
+        </button>
       </div>
 
-      {/* MODAL */}
-      {modalOpen && (
-        <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            background: "rgba(0,0,0,0.5)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <div
-            style={{
-              background: "white",
-              padding: "20px",
-              borderRadius: "10px",
-              width: "300px",
-            }}
-          >
-            <h3>{activeExercise}</h3>
+      {/* COLUMN HEADERS */}
+      <div className="exercise-header-row">
+        <div>Exercise</div>
+        <div>To Beat</div>
+        <div>Today</div>
+      </div>
 
-            <button onClick={() => setModalOpen(false)}>
-              Back
-            </button>
+      {/* TABLE */}
+      <div className="exercise-table">
 
-            <div style={{ marginTop: "10px" }}>
-              <input
-                placeholder="Weight (kg)"
-                value={weight}
-                onChange={(e) => setWeight(e.target.value)}
-              />
+        {(routine.exercises || []).map((ex) => {
+          const logs = ex.logs || [];
+
+          const todayLog = logs.find((l) => l.date === today);
+          const lastLog = [...logs]
+            .reverse()
+            .find((l) => l.date !== today);
+
+          return (
+            <div className="exercise-row" key={ex.name}>
+
+              {/* EXERCISE NAME */}
+              <div className="col name">
+                {ex.name}
+
+                {editing && (
+                  <button
+                    className="delete-btn"
+                    onClick={() => deleteExercise(ex.name)}
+                  >
+                    🗑
+                  </button>
+                )}
+              </div>
+
+              {/* TO BEAT */}
+              <div className="col tobeat">
+                {lastLog
+                  ? `${lastLog.weight}kg × ${lastLog.reps}`
+                  : "-"}
+              </div>
+
+              {/* TODAY */}
+              <div className="col today">
+                {!todayLog ? (
+                  <button
+                    className="plus-btn"
+                    onClick={() => openLog(ex.name)}
+                  >
+                    +
+                  </button>
+                ) : (
+                  `${todayLog.weight}kg × ${todayLog.reps}`
+                )}
+              </div>
+
             </div>
+          );
+        })}
 
-            <div style={{ marginTop: "10px" }}>
-              <input
-                placeholder="Reps"
-                value={reps}
-                onChange={(e) => setReps(e.target.value)}
-              />
-            </div>
+      </div>
 
-            <button
-              onClick={saveLog}
-              style={{ marginTop: "10px" }}
-            >
-              Save
-            </button>
-          </div>
+      {/* ADD EXERCISE (EDIT MODE) */}
+      {editing && (
+        <div className="add-exercise">
+          <input
+            placeholder="New exercise"
+            value={newExercise}
+            onChange={(e) => setNewExercise(e.target.value)}
+          />
+          <button onClick={addExercise}>Add</button>
         </div>
       )}
+
+      {/* MODAL */}
+{modalOpen && (
+  <div className="modal-overlay">
+    <div className="modal">
+
+      {/* HEADER */}
+      <div className="modal-header">
+        <button
+          className="modal-close"
+          onClick={() => setModalOpen(false)}
+          type="button"
+        >
+          ×
+        </button>
+
+        <h3 className="modal-title">
+          {activeExercise}
+        </h3>
+      </div>
+
+      {/* INPUTS */}
+      <input
+        placeholder="Weight (kg)"
+        value={weight}
+        onChange={(e) => setWeight(e.target.value)}
+      />
+
+      <input
+        placeholder="Reps"
+        value={reps}
+        onChange={(e) => setReps(e.target.value)}
+      />
+
+      <button onClick={saveLog}>
+        Save
+      </button>
+
+    </div>
+  </div>
+)}
+
     </div>
   );
 }

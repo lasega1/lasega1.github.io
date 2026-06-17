@@ -1,0 +1,76 @@
+/* -----------------------
+   DASHBOARD WRAPPER
+------------------------ */
+
+.dashboard {
+  padding: 20px;
+}
+
+/* -----------------------
+   TITLE
+------------------------ */
+
+.dashboard h1 {
+  margin-bottom: 20px;
+  font-size: xx-large;
+}
+
+/* -----------------------
+   GRID LAYOUT (2 PER ROW)
+------------------------ */
+
+.routine-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+/* -----------------------
+   ROUTINE CARD
+------------------------ */
+
+.routine-card {
+  background: #c52929;
+  border-radius: 14px;
+  height: 120px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: bold;
+  text-align: center;
+
+  cursor: pointer;
+
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.routine-card:active {
+  transform: scale(0.97);
+}
+
+/* -----------------------
+   ADD TILE (LAST SQUARE)
+------------------------ */
+
+.add-card {
+  background: #221B26;
+  border-radius: 14px;
+  height: 120px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: bold;
+  cursor: pointer;
+
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.add-card:active {
+  transform: scale(0.97);
+}

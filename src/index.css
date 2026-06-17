@@ -1,0 +1,161 @@
+/* -----------------------
+   RESET + BASE
+------------------------ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+  touch-action: manipulation;
+  height: 100%;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #161617;
+  color: #ececec;
+  line-height: 1.4;
+}
+
+/* -----------------------
+   APP CONTAINER
+------------------------ */
+
+#root {
+  height: 100vh;
+  max-width: 480px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* -----------------------
+   INPUTS (IMPORTANT IOS FIX)
+------------------------ */
+
+input, textarea, button {
+  font-family: inherit;
+}
+
+input, textarea {
+  font-size: 16px; /* prevents iOS zoom */
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+}
+
+/* focus state */
+input:focus, textarea:focus {
+  border-color: #999;
+}
+
+/* -----------------------
+   BUTTONS
+------------------------ */
+
+button {
+  font-size: 10px;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 8px;
+  background: #111;
+  color: #fff;
+  cursor: pointer;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+/* -----------------------
+   GRID SAFE AREA
+------------------------ */
+
+.app-padding {
+  padding: 10px;
+}
+
+/* -----------------------
+   HEADINGS
+------------------------ */
+
+h1 {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+h2 {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+h3 {
+  font-size: 16px;
+}
+
+/* -----------------------
+   MODAL FIX (CENTRE + MOBILE SAFE)
+------------------------ */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal-box {
+  background: white;
+  width: 100%;
+  max-width: 320px;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+/* -----------------------
+   UTILITY
+------------------------ */
+
+.row {
+  display: flex;
+  gap: 10px;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-scroll {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+
+  color: white;
+  font-size: 12px;
+
+  padding: 6px 2px;
+  outline: none;
+  
+}
+
+input, textarea, select {
+  font-size: 16px;
+}

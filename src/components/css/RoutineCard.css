@@ -1,0 +1,66 @@
+/* -----------------------
+   ROUTINE CARD (BASE)
+------------------------ */
+
+.routine-card {
+  background: #a295db;
+  border-radius: 14px;
+  height: 120px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: bold;
+  text-align: center;
+
+  cursor: pointer;
+
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+
+  position: relative;
+}
+
+/* press feedback */
+.routine-card:active {
+  transform: scale(0.97);
+}
+
+/* -----------------------
+   ROUTINE NAME
+------------------------ */
+
+.routine-name {
+  font-size: 16px;
+}
+
+/* -----------------------
+   LAST TRAINED TEXT
+------------------------ */
+
+.routine-meta {
+  font-size: 12px;
+  font-weight: normal;
+  margin-top: 6px;
+  color: #555;
+}
+
+/* -----------------------
+   OPTIONAL STATUS BADGE
+   (Recovering / Ready)
+------------------------ */
+
+.routine-status {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+
+  font-size: 10px;
+  padding: 4px 6px;
+  border-radius: 6px;
+
+  background: #2e2e2e;
+  color: #b6b6b6;
+}

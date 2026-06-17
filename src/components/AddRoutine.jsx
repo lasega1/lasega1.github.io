@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./css/AddRoutine.css";
 
 function AddRoutine({ onSave, onCancel }) {
   const [name, setName] = useState("");
@@ -32,40 +33,62 @@ function AddRoutine({ onSave, onCancel }) {
   }
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>Create Routine</h1>
+    <div className="add-routine">
 
-      <button onClick={onCancel}>← Back</button>
-
-      <div style={{ marginTop: "10px" }}>
-        <input
-          placeholder="Routine name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
+      {/* HEADER */}
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <button onClick={onCancel}>←</button>
+        <button onClick={handleSave}>Done</button>
       </div>
 
-      <h3>Exercises</h3>
+      {/* ROUTINE NAME */}
+      <input
+        className="routine-name-input"
+        placeholder="Routine name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
 
-      <div style={{ display: "flex", gap: "10px" }}>
+      {/* SECTION TITLE */}
+      <div className="exercise-title">
+        Exercises
+      </div>
+
+      {/* INPUT ROW */}
+      <div className="exercise-input-row">
         <input
-          placeholder="e.g. Bench Press"
+          placeholder="Exercise Name"
           value={exerciseInput}
           onChange={(e) => setExerciseInput(e.target.value)}
         />
 
-        <button onClick={addExercise}>Add</button>
+        <button onClick={addExercise}>
+          Add
+        </button>
       </div>
 
-      <ul>
-        {exercises.map((ex, i) => (
-          <li key={i}>{ex.name}</li>
-        ))}
-      </ul>
+      {/* LIST (NO BULLETS) */}
+      <div className="exercise-list">
+  {exercises.map((ex, i) => (
+    <div key={i} className="exercise-item">
 
-      <button onClick={handleSave} style={{ marginTop: "20px" }}>
-        Done
+      <span>{ex.name}</span>
+
+      <button
+        className="delete-btn"
+        onClick={() =>
+          setExercises((prev) =>
+            prev.filter((_, index) => index !== i)
+          )
+        }
+      >
+        🗑
       </button>
+
+    </div>
+  ))}
+</div>
+
     </div>
   );
 }

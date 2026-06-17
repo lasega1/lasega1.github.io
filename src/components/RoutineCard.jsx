@@ -1,9 +1,11 @@
+import "./css/RoutineCard.css";
+
 function RoutineCard({ routine, onClick }) {
   function getLastTrainedText() {
     let latestDate = null;
 
-    routine.exercises.forEach((ex) => {
-      ex.logs.forEach((log) => {
+    (routine.exercises || []).forEach((ex) => {
+      (ex.logs || []).forEach((log) => {
         const logDate = new Date(log.date);
 
         if (!latestDate || logDate > latestDate) {
@@ -27,13 +29,21 @@ function RoutineCard({ routine, onClick }) {
   }
 
   return (
-    <button onClick={onClick} style={{ margin: "10px 0" }}>
-      <h2>{routine.name}</h2>
+    <div className="routine-card" onClick={onClick}>
 
-      <p>{routine.exercises.length} exercises</p>
+      <div className="routine-name">
+        {routine.name}
+      </div>
 
-      <small>{getLastTrainedText()}</small>
-    </button>
+      <div className="routine-meta">
+        {routine.exercises?.length || 0} exercises
+      </div>
+
+      <div className="routine-meta">
+        {getLastTrainedText()}
+      </div>
+
+    </div>
   );
 }
 
