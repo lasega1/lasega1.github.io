@@ -8,7 +8,14 @@ function AddRoutine({ onSave, onCancel }) {
   function addExercise() {
     if (!exerciseInput.trim()) return;
 
-    setExercises((prev) => [...prev, exerciseInput.trim()]);
+    setExercises((prev) => [
+      ...prev,
+      {
+        name: exerciseInput.trim(),
+        logs: [],
+      },
+    ]);
+
     setExerciseInput("");
   }
 
@@ -25,12 +32,12 @@ function AddRoutine({ onSave, onCancel }) {
   }
 
   return (
-    <div className="add-routine">
+    <div style={{ padding: "20px" }}>
       <h1>Create Routine</h1>
 
       <button onClick={onCancel}>← Back</button>
 
-      <div>
+      <div style={{ marginTop: "10px" }}>
         <input
           placeholder="Routine name"
           value={name}
@@ -40,7 +47,7 @@ function AddRoutine({ onSave, onCancel }) {
 
       <h3>Exercises</h3>
 
-      <div className="exercise-input">
+      <div style={{ display: "flex", gap: "10px" }}>
         <input
           placeholder="e.g. Bench Press"
           value={exerciseInput}
@@ -52,11 +59,11 @@ function AddRoutine({ onSave, onCancel }) {
 
       <ul>
         {exercises.map((ex, i) => (
-          <li key={i}>{ex}</li>
+          <li key={i}>{ex.name}</li>
         ))}
       </ul>
 
-      <button onClick={handleSave}>
+      <button onClick={handleSave} style={{ marginTop: "20px" }}>
         Done
       </button>
     </div>
